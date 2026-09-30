@@ -27,7 +27,7 @@ BEGIN
     ELSE
       seq := seq + 1;
     END IF;
-    UPDATE purchases SET invoice_number = 'AH-' || cur_date || '-' || LPAD(seq::text, 4, '0')
+    UPDATE purchases SET invoice_number = 'BP-' || cur_date || '-' || LPAD(seq::text, 4, '0')
     WHERE id = rec.id;
   END LOOP;
 END $$;
