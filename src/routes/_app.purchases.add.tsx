@@ -60,7 +60,7 @@ function AddPurchase() {
   // Phone suggestions
   const [phoneSuggestions, setPhoneSuggestions]     = useState<Customer[]>([]);
   const [showPhoneSuggestions, setShowPhoneSuggestions] = useState(false);
-  const phoneTimer  = useRef<ReturnType<typeof setTimeout>>();
+  const phoneTimer  = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const phoneSugRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -198,6 +198,11 @@ function AddPurchase() {
         let customer = await fetchCustomerByPhone(phone.trim());
         if (!customer) {
           customer = await createCustomer({ customer_name: name.trim(), phone_number: phone.trim(), email: null, address: null, notes: null });
+        }
+        if (!customer) {
+          toast.error("Failed to create or retrieve customer record.");
+          setSaving(false);
+          return;
         }
         customerId = customer.id;
         displayName = name.trim();

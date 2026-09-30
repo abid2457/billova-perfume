@@ -17,7 +17,7 @@ function useGlobalSearch() {
   const [q, setQ] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(false);
-  const timer = useRef<ReturnType<typeof setTimeout>>();
+  const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   const search = useCallback(async (term: string) => {
     if (term.length < 2) { setResults([]); return; }

@@ -51,7 +51,7 @@ function SettingsPage() {
           <Section icon={User} title="Account" desc="Your profile details">
             <div className="grid gap-4 sm:grid-cols-2">
               <Field label="Email" value={user?.email ?? "—"} readOnly />
-              <Field label="User ID" value={user?.id?.substring(0, 16) + "..." ?? "—"} readOnly />
+              <Field label="User ID" value={user?.id ? user.id.substring(0, 16) + "..." : "—"} readOnly />
               <Field label="Member Since" value={user?.created_at ? new Date(user.created_at).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" }) : "—"} readOnly />
               <Field label="Last Sign-in" value={user?.last_sign_in_at ? new Date(user.last_sign_in_at).toLocaleString("en-IN") : "—"} readOnly />
             </div>

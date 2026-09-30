@@ -47,7 +47,7 @@ function History() {
   // Edit purchase flow
   const [passkodeTarget, setPasskodeTarget] = useState<Purchase | null>(null);
   const [editPurchase,   setEditPurchase]   = useState<Purchase | null>(null);
-  const timer = useRef<ReturnType<typeof setTimeout>>();
+  const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const sugRef = useRef<HTMLDivElement>(null);
 
   const handleEditClick = (p: Purchase) => setPasskodeTarget(p);
