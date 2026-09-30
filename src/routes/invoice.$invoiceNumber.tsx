@@ -23,14 +23,14 @@ export const Route = createFileRoute("/invoice/$invoiceNumber")({
 
 // ─── Store constants (duplicated from InvoiceService to avoid importing heavy deps) ──
 const STORE = {
-  name: "Billova Perfumes",
+  name: "Hira Perfumes",
   tagline: "Exclusive Fragrances & Perfumes",
-  phone: "+91 8098755101",
+  phone: "+91 99940 33831",
   gst: "",
-  address1: "172/76 First West Main Road",
-  address2: "Behind Silk Mill Bus Stop",
-  address3: "Gandhi Nagar",
-  address4: "Vellore - 632006",
+  address1: "215, Anna Salai Main Road",
+  address2: "Near Niswan Street (Near Lassi Shop)",
+  address3: "Melvisharam",
+  address4: "Tamil Nadu - 632509",
 };
 
 function fmtINR(n: number): string {

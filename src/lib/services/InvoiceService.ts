@@ -12,15 +12,15 @@ import logoUrl from "@/assets/logo.png";
 
 // ─── STORE CONSTANTS ────────────────────────────────────────────────────────
 export const STORE = {
-  name: "Billova Perfumes",
-  phone: "+91 8098755101",
+  name: "Hira Perfumes",
+  phone: "+91 99940 33831",
   gst: "", // GST placeholder — populate when registered
-  address1: "172/76 First West Main Road",
-  address2: "Behind Silk Mill Bus Stop",
-  address3: "Gandhi Nagar",
-  address4: "Vellore - 632006",
+  address1: "215, Anna Salai Main Road",
+  address2: "Near Niswan Street (Near Lassi Shop)",
+  address3: "Melvisharam",
+  address4: "Tamil Nadu - 632509",
   addressOneLine:
-    "172/76 First West Main Road, Behind Silk Mill Bus Stop, Gandhi Nagar, Vellore - 632006",
+    "215, Anna Salai Main Road, Near Niswan Street (Near Lassi Shop), Melvisharam, Tamil Nadu - 632509",
   brandColor: [139, 94, 60] as [number, number, number],
 };
 

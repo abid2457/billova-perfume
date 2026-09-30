@@ -40,7 +40,7 @@ function SettingsPage() {
           {/* Business Info */}
           <Section icon={Store} title="Business Details" desc="Your shop information">
             <div className="grid gap-4 sm:grid-cols-2">
-              <Field label="Business Name" value="Billova Perfumes" readOnly />
+              <Field label="Business Name" value="Hira Perfumes" readOnly />
               <Field label="Business Type" value="Fragrance & Attar" readOnly />
               <Field label="Currency" value="INR (₹)" readOnly />
               <Field label="Timezone" value="Asia/Kolkata (IST)" readOnly />
