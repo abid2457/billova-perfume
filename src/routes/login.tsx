@@ -9,7 +9,7 @@ import logoImg from "@/assets/logo.png";
 import barakahLogo from "@/assets/barakah-logo.png";
 
 export const Route = createFileRoute("/login")({
-  head: () => ({ meta: [{ title: "Sign in — Billova Perfumes" }, { name: "description", content: "Sign in to your Billova Perfumes purchase tracker." }] }),
+  head: () => ({ meta: [{ title: "Sign in — Hira Perfumes" }, { name: "description", content: "Sign in to your Hira Perfumes purchase tracker." }] }),
   component: () => <AuthProvider><LoginInner /></AuthProvider>,
 });
 
@@ -50,15 +50,15 @@ function LoginInner() {
       {/* Left panel — desktop only */}
       <div className="hidden flex-col justify-between p-12 text-primary-foreground lg:flex" style={{ background: "var(--gradient-primary)" }}>
         <div className="flex items-center gap-3">
-          <img src={logoImg} alt="Billova Perfumes" className="h-12 w-auto object-contain drop-shadow-lg" />
-          <span className="font-display text-lg font-bold">Billova Perfumes</span>
+          <img src={logoImg} alt="Hira Perfumes" className="h-12 w-auto object-contain drop-shadow-lg" />
+          <span className="font-display text-lg font-bold">Hira Perfumes</span>
         </div>
         <div>
           <h2 className="font-display text-4xl font-bold leading-tight">Every purchase, neatly remembered.</h2>
           <p className="mt-4 max-w-md text-white/80">Track customer histories, recognise loyal shoppers, and keep your shop's ledger calm and searchable.</p>
         </div>
         <div className="space-y-2">
-          <p className="text-sm text-white/60">© 2026 Billova Perfumes</p>
+          <p className="text-sm text-white/60">© 2026 Hira Perfumes</p>
           <div className="flex items-center gap-2 text-sm text-white/50">
             <span>Developed by</span>
             <a href="https://www.barakahtechnologies.com/" target="_blank" rel="noopener noreferrer"
@@ -75,8 +75,8 @@ function LoginInner() {
         <form onSubmit={handleSubmit} className="w-full max-w-sm space-y-6">
           {/* Mobile logo */}
           <div className="flex items-center gap-3 lg:hidden">
-            <img src={logoImg} alt="Billova Perfumes" className="h-10 w-auto object-contain" />
-            <span className="font-display text-lg font-bold">Billova Perfumes</span>
+            <img src={logoImg} alt="Hira Perfumes" className="h-10 w-auto object-contain" />
+            <span className="font-display text-lg font-bold">Hira Perfumes</span>
           </div>
           <div>
             <h1 className="font-display text-3xl font-bold tracking-tight">
@@ -122,7 +122,7 @@ function LoginInner() {
 
         {/* Mobile footer */}
         <div className="mt-8 text-center lg:hidden">
-          <p className="text-xs text-muted-foreground">© 2026 Billova Perfumes</p>
+          <p className="text-xs text-muted-foreground">© 2026 Hira Perfumes</p>
           <div className="mt-1 flex items-center justify-center gap-1.5 text-xs text-muted-foreground">
             <span>Developed by</span>
             <a href="https://www.barakahtechnologies.com/" target="_blank" rel="noopener noreferrer"

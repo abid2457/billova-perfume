@@ -13,7 +13,7 @@ import { formatDate } from "@/lib/types";
 import type { Category } from "@/lib/types";
 
 export const Route = createFileRoute("/_app/categories")({
-  head: () => ({ meta: [{ title: "Categories — Billova Perfumes" }] }),
+  head: () => ({ meta: [{ title: "Categories — Hira Perfumes" }] }),
   component: CategoriesPage,
 });
 

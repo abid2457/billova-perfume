@@ -71,7 +71,7 @@ export function AppHeader({ title }: { title: string }) {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
-  const initials = user?.email ? user.email.substring(0, 2).toUpperCase() : "BP";
+  const initials = user?.email ? user.email.substring(0, 2).toUpperCase() : "HP";
   const lastLogin = user?.last_sign_in_at ? new Date(user.last_sign_in_at).toLocaleString("en-IN") : "—";
 
   const goToResult = (r: SearchResult) => {

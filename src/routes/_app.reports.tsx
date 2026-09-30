@@ -8,7 +8,7 @@ import { formatINR, formatDate } from "@/lib/types";
 import { supabase } from "@/lib/supabase";
 
 export const Route = createFileRoute("/_app/reports")({
-  head: () => ({ meta: [{ title: "Reports — Billova Perfumes" }] }),
+  head: () => ({ meta: [{ title: "Reports — Hira Perfumes" }] }),
   component: ReportsPage,
 });
 
@@ -233,7 +233,7 @@ function ReportsPage() {
       csv = "Customer,Phone,Total Spent,Orders,Avg Order,Last Purchase\n";
       topCustomers.forEach((c) => { csv += `"${c.name}",${c.phone},${c.total},${c.count},${c.avg},${c.last}\n`; });
     }
-    download(csv, `billova_${tab}_${exactDate ?? period}.csv`, "text/csv");
+    download(csv, `hira_${tab}_${exactDate ?? period}.csv`, "text/csv");
   };
 
   const exportExcel = () => {
@@ -258,18 +258,18 @@ function ReportsPage() {
       Object.entries(paymentSummary).forEach(([k, v]) => { html += `<tr><td>${k}</td><td>${v}</td></tr>`; });
     }
     html += "</table></body></html>";
-    download(html, `billova_${tab}_${exactDate ?? period}.xls`, "application/vnd.ms-excel");
+    download(html, `hira_${tab}_${exactDate ?? period}.xls`, "application/vnd.ms-excel");
   };
 
   const exportPDF = () => {
     // Print-friendly view
     const printWindow = window.open("", "_blank");
     if (!printWindow) return;
-    let content = `<html><head><title>Billova Report - ${tab} (${period})</title><style>body{font-family:sans-serif;padding:20px}table{width:100%;border-collapse:collapse;margin-top:16px}th,td{border:1px solid #ddd;padding:8px;text-align:left}th{background:#f5f0eb}h1{color:#8B5E3C}h2{color:#666;font-size:14px}</style></head><body>`;
+    let content = `<html><head><title>Hira Report - ${tab} (${period})</title><style>body{font-family:sans-serif;padding:20px}table{width:100%;border-collapse:collapse;margin-top:16px}th,td{border:1px solid #ddd;padding:8px;text-align:left}th{background:#f5f0eb}h1{color:#8B5E3C}h2{color:#666;font-size:14px}</style></head><body>`;
     const pdfPeriodLabel = exactDate
       ? formatExactDate(exactDate)
       : period.charAt(0).toUpperCase() + period.slice(1);
-    content += `<h1>Billova Perfumes — ${tab.charAt(0).toUpperCase() + tab.slice(1)} Report</h1>`;
+    content += `<h1>Hira Perfumes — ${tab.charAt(0).toUpperCase() + tab.slice(1)} Report</h1>`;
     content += `<h2>Period: ${pdfPeriodLabel} | Generated: ${new Date().toLocaleString("en-IN")}</h2>`;
 
     if (tab === "overview") {

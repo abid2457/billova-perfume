@@ -77,7 +77,7 @@ input[type="number"] {
 
 :root {
   --radius: 0.625rem;
-  /* Billova Perfumes theme: cream background, gold/bronze accents, deep brown text */
+  /* Hira Perfumes theme: cream background, gold/bronze accents, deep brown text */
   --background: oklch(0.965 0.018 75);
   --foreground: oklch(0.25 0.04 50);
   --card: oklch(0.995 0.008 80);

@@ -17,7 +17,7 @@ import { QuickBillsTab } from "@/components/quick-bills-tab";
 type HistoryTab = "customers" | "quick";
 
 export const Route = createFileRoute("/_app/history")({
-  head: () => ({ meta: [{ title: "Purchase History — Billova Perfumes" }] }),
+  head: () => ({ meta: [{ title: "Purchase History — Hira Perfumes" }] }),
   component: History,
   validateSearch: (s: Record<string, unknown>) => ({ phone: (s.phone as string) ?? "" }),
 });

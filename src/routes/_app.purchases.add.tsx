@@ -13,7 +13,7 @@ import { supabase } from "@/lib/supabase";
 import type { Product, ProductVariant, Customer, Purchase } from "@/lib/types";
 
 export const Route = createFileRoute("/_app/purchases/add")({
-  head: () => ({ meta: [{ title: "Add Purchase — Billova Perfumes" }] }),
+  head: () => ({ meta: [{ title: "Add Purchase — Hira Perfumes" }] }),
   component: AddPurchase,
 });
 

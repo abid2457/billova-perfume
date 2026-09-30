@@ -16,7 +16,7 @@ import { printThermalReceipt, sendWhatsAppBill } from "@/lib/receipt";
 import type { Purchase } from "@/lib/types";
 
 export const Route = createFileRoute("/_app/")({
-  head: () => ({ meta: [{ title: "Dashboard — Billova Perfumes" }] }),
+  head: () => ({ meta: [{ title: "Dashboard — Hira Perfumes" }] }),
   component: Dashboard,
 });
 
@@ -90,7 +90,7 @@ function Dashboard() {
       <AppHeader title="Dashboard" />
       <main className="flex-1 space-y-6 p-4 sm:p-6">
         <div>
-          <h2 className="font-display text-2xl font-bold tracking-tight">Welcome back to Billova</h2>
+          <h2 className="font-display text-2xl font-bold tracking-tight">Welcome back to Hira Perfumes</h2>
           <p className="text-sm text-muted-foreground">A quick look at your fragrance sales today.</p>
         </div>
 

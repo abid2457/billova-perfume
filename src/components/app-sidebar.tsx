@@ -28,10 +28,10 @@ export function AppSidebar() {
     <Sidebar collapsible="icon">
       <SidebarHeader className="border-b">
         <Link to="/" className="flex items-center gap-2.5 px-2 py-2">
-          <img src={logoImg} alt="Billova" className="h-9 w-9 shrink-0 rounded-xl object-contain" />
+          <img src={logoImg} alt="Hira Perfumes" className="h-9 w-9 shrink-0 rounded-xl object-contain" />
           {!collapsed && (
             <div className="min-w-0">
-              <div className="font-display text-sm font-bold tracking-tight">Billova Perfumes</div>
+              <div className="font-display text-sm font-bold tracking-tight">Hira Perfumes</div>
               <div className="text-[11px] text-muted-foreground">Purchase Tracker</div>
             </div>
           )}

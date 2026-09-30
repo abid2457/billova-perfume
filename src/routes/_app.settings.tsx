@@ -11,7 +11,7 @@ import { supabase } from "@/lib/supabase";
 import barakahLogo from "@/assets/barakah-logo.png";
 
 export const Route = createFileRoute("/_app/settings")({
-  head: () => ({ meta: [{ title: "Settings — Billova Perfumes" }] }),
+  head: () => ({ meta: [{ title: "Settings — Hira Perfumes" }] }),
   component: SettingsPage,
 });
 
@@ -92,7 +92,7 @@ function SettingsPage() {
           </Section>
 
           <div className="space-y-1 py-4 text-center">
-            <p className="text-xs text-muted-foreground">Billova Purchase Tracker v1.0.0</p>
+            <p className="text-xs text-muted-foreground">Hira Perfumes Purchase Tracker v1.0.0</p>
             <div className="flex items-center justify-center gap-1.5 text-xs text-muted-foreground">
               <span>Developed by</span>
               <a href="https://www.barakahtechnologies.com/" target="_blank" rel="noopener noreferrer"

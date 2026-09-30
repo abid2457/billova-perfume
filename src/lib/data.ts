@@ -279,7 +279,7 @@ async function generateInvoiceNumber(): Promise<string> {
   const dateStr = now.getFullYear().toString() +
     String(now.getMonth() + 1).padStart(2, "0") +
     String(now.getDate()).padStart(2, "0");
-  const prefix = `BP-${dateStr}-`;
+  const prefix = `HP-${dateStr}-`;
 
   const { data } = await supabase
     .from("purchases")

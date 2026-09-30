@@ -13,7 +13,7 @@ import { supabase } from "@/lib/supabase";
 import type { Customer } from "@/lib/types";
 
 export const Route = createFileRoute("/_app/customers")({
-  head: () => ({ meta: [{ title: "Customers — Billova Perfumes" }] }),
+  head: () => ({ meta: [{ title: "Customers — Hira Perfumes" }] }),
   component: CustomersPage,
 });
 

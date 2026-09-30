@@ -74,13 +74,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Billova Perfumes — Customer Purchase Tracker" },
+      { title: "Hira Perfumes — Customer Purchase Tracker" },
       { name: "description", content: "Modern purchase history tracker for small shops — search, log, and review every customer transaction." },
-      { property: "og:title", content: "Billova Perfumes — Customer Purchase Tracker" },
+      { property: "og:title", content: "Hira Perfumes — Customer Purchase Tracker" },
       { property: "og:description", content: "Modern purchase history tracker for small shops." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@BillovaPerfumes" },
+      { name: "twitter:site", content: "@HiraPerfumes" },
     ],
     links: [
       { rel: "icon", type: "image/png", href: faviconUrl },
