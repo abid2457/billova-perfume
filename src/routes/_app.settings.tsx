@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Store, User, Lock, Palette, Database } from "lucide-react";
+import { Store, User, Lock, KeyRound, Palette, Database } from "lucide-react";
 import { toast } from "sonner";
 import { AppHeader } from "@/components/app-header";
 import { Input } from "@/components/ui/input";
@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/lib/auth";
 import { supabase } from "@/lib/supabase";
+import { updateAdminPasscode } from "@/lib/data";
 import barakahLogo from "@/assets/barakah-logo.png";
 
 export const Route = createFileRoute("/_app/settings")({
@@ -21,6 +22,10 @@ function SettingsPage() {
   const [confirmPwd, setConfirmPwd] = useState("");
   const [changingPwd, setChangingPwd] = useState(false);
 
+  const [newPasscode, setNewPasscode] = useState("");
+  const [confirmPasscode, setConfirmPasscode] = useState("");
+  const [changingPasscode, setChangingPasscode] = useState(false);
+
   const changePassword = async () => {
     if (newPwd.length < 6) { toast.error("Password must be at least 6 characters."); return; }
     if (newPwd !== confirmPwd) { toast.error("Passwords do not match."); return; }
@@ -30,6 +35,21 @@ function SettingsPage() {
     if (error) { toast.error(error.message); return; }
     toast.success("Password updated successfully!");
     setNewPwd(""); setConfirmPwd("");
+  };
+
+  const changeAdminPasscode = async () => {
+    if (!newPasscode.trim()) { toast.error("Please enter a new passcode."); return; }
+    if (newPasscode !== confirmPasscode) { toast.error("Passcodes do not match."); return; }
+    setChangingPasscode(true);
+    const ok = await updateAdminPasscode(newPasscode.trim());
+    setChangingPasscode(false);
+    if (ok) {
+      toast.success("Admin bill edit passcode updated successfully!");
+      setNewPasscode("");
+      setConfirmPasscode("");
+    } else {
+      toast.error("Failed to update passcode. Please run the SQL migration or check permissions.");
+    }
   };
 
   return (
@@ -55,6 +75,40 @@ function SettingsPage() {
               <Field label="Member Since" value={user?.created_at ? new Date(user.created_at).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" }) : "—"} readOnly />
               <Field label="Last Sign-in" value={user?.last_sign_in_at ? new Date(user.last_sign_in_at).toLocaleString("en-IN") : "—"} readOnly />
             </div>
+          </Section>
+
+          {/* Admin Edit Passcode */}
+          <Section icon={KeyRound} title="Admin Edit Passcode" desc="Passcode required to edit customer bills & purchases">
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="space-y-1.5">
+                <Label>New Passcode</Label>
+                <Input
+                  type="text"
+                  value={newPasscode}
+                  onChange={(e) => setNewPasscode(e.target.value)}
+                  placeholder="e.g. 9789"
+                  className="rounded-xl"
+                />
+              </div>
+              <div className="space-y-1.5">
+                <Label>Confirm Passcode</Label>
+                <Input
+                  type="text"
+                  value={confirmPasscode}
+                  onChange={(e) => setConfirmPasscode(e.target.value)}
+                  placeholder="Repeat new passcode"
+                  className="rounded-xl"
+                />
+              </div>
+            </div>
+            <Button
+              onClick={changeAdminPasscode}
+              disabled={changingPasscode}
+              className="mt-4 rounded-xl"
+              style={{ background: "var(--gradient-primary)" }}
+            >
+              {changingPasscode ? "Updating Passcode..." : "Update Passcode"}
+            </Button>
           </Section>
 
           {/* Password */}

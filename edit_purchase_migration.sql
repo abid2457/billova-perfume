@@ -13,11 +13,11 @@ CREATE TABLE IF NOT EXISTS settings (
   updated_at    timestamptz DEFAULT now()
 );
 
--- 3. Store hashed passcode 5121
+-- 3. Store hashed passcode 9789
 INSERT INTO settings (setting_key, setting_value)
-VALUES ('admin_edit_passcode', crypt('5121', gen_salt('bf')))
+VALUES ('admin_edit_passcode', crypt('9789', gen_salt('bf')))
 ON CONFLICT (setting_key)
-DO UPDATE SET setting_value = crypt('5121', gen_salt('bf')), updated_at = now();
+DO UPDATE SET setting_value = crypt('9789', gen_salt('bf')), updated_at = now();
 
 -- 4. Lock settings table — no direct reads from frontend
 ALTER TABLE settings ENABLE ROW LEVEL SECURITY;
@@ -29,7 +29,7 @@ CREATE OR REPLACE FUNCTION verify_admin_passcode(input_passcode text)
 RETURNS boolean
 LANGUAGE plpgsql
 SECURITY DEFINER
-SET search_path = public
+SET search_path = public, extensions
 AS $$
 DECLARE
   stored_hash text;

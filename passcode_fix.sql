@@ -1,10 +1,9 @@
 -- ═══════════════════════════════════════════════════════════════
--- PASSCODE FIX — Run this in Supabase SQL Editor
--- Root cause: SECURITY DEFINER function had search_path = public
--- which blocked access to pgcrypto (installed in 'extensions' schema).
+-- PASSCODE UPDATE — Run this in Supabase SQL Editor
+-- Sets the admin edit passcode to 9789 and ensures proper security
 -- ═══════════════════════════════════════════════════════════════
 
--- 1. Recreate the function with the correct search_path
+-- 1. Ensure verify_admin_passcode function uses proper search_path
 CREATE OR REPLACE FUNCTION verify_admin_passcode(input_passcode text)
 RETURNS boolean
 LANGUAGE plpgsql
@@ -21,14 +20,36 @@ BEGIN
 END;
 $$;
 
--- 2. Re-insert the passcode hash (in case the first INSERT also failed)
---    This uses the now-correct extensions.crypt via search_path
-INSERT INTO settings (setting_key, setting_value)
-VALUES ('admin_edit_passcode', crypt('5121', gen_salt('bf')))
+-- 2. Function to allow authenticated admins to update passcode
+CREATE OR REPLACE FUNCTION update_admin_passcode(new_passcode text)
+RETURNS boolean
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public, extensions
+AS $$
+BEGIN
+  IF auth.uid() IS NULL THEN
+    RAISE EXCEPTION 'Not authenticated';
+  END IF;
+
+  INSERT INTO settings (setting_key, setting_value, updated_at)
+  VALUES ('admin_edit_passcode', crypt(new_passcode, gen_salt('bf')), now())
+  ON CONFLICT (setting_key)
+  DO UPDATE SET
+    setting_value = crypt(new_passcode, gen_salt('bf')),
+    updated_at = now();
+
+  RETURN TRUE;
+END;
+$$;
+
+-- 3. Set the new passcode: 9789
+INSERT INTO settings (setting_key, setting_value, updated_at)
+VALUES ('admin_edit_passcode', crypt('9789', gen_salt('bf')), now())
 ON CONFLICT (setting_key)
 DO UPDATE SET
-  setting_value = crypt('5121', gen_salt('bf')),
+  setting_value = crypt('9789', gen_salt('bf')),
   updated_at = now();
 
--- 3. Quick sanity-check — should return TRUE
-SELECT verify_admin_passcode('5121') AS should_be_true;
+-- 4. Verify that 9789 works (should return TRUE)
+SELECT verify_admin_passcode('9789') AS passcode_9789_is_valid;

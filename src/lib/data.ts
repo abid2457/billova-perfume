@@ -672,6 +672,15 @@ export async function verifyAdminPasscode(code: string): Promise<boolean> {
   } catch { return false; }
 }
 
+/** Updates the admin edit passcode (requires admin auth session) */
+export async function updateAdminPasscode(newCode: string): Promise<boolean> {
+  try {
+    const { data, error } = await supabase.rpc("update_admin_passcode", { new_passcode: newCode });
+    if (error) { console.error("[updateAdminPasscode]", error.message); return false; }
+    return data === true;
+  } catch { return false; }
+}
+
 // ─── UPDATE PURCHASE ─────────────────────────────────────────────────────────
 
 export async function updatePurchase(

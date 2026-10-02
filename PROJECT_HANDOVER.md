@@ -26,6 +26,7 @@
 | :--- | :--- |
 | **Supabase Project URL** | `https://xpsopjgsxrutssxajezx.supabase.co` |
 | **Supabase Publishable/Anon Key** | `sb_publishable_wx-xsbMR27b8i4qcT6Go5g_uDVo_7aR` |
+| **Admin Bill Edit Passcode** | `9789` |
 | **Storage Bucket** | `invoices` (Public read, authenticated write) |
 | **Master Database Setup SQL** | [`supabase_master_setup.sql`](file:///a:/barakah%20project/billova%20perfumes/supabase_master_setup.sql) |
 

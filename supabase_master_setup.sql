@@ -176,11 +176,34 @@ BEGIN
 END;
 $$;
 
--- Seed default admin passcode: 5121
+-- Allow authenticated admins to update admin passcode
+CREATE OR REPLACE FUNCTION update_admin_passcode(new_passcode text)
+RETURNS boolean
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public, extensions
+AS $$
+BEGIN
+  IF auth.uid() IS NULL THEN
+    RAISE EXCEPTION 'Not authenticated';
+  END IF;
+
+  INSERT INTO settings (setting_key, setting_value, updated_at)
+  VALUES ('admin_edit_passcode', crypt(new_passcode, gen_salt('bf')), now())
+  ON CONFLICT (setting_key)
+  DO UPDATE SET
+    setting_value = crypt(new_passcode, gen_salt('bf')),
+    updated_at = now();
+
+  RETURN TRUE;
+END;
+$$;
+
+-- Seed default admin passcode: 9789
 INSERT INTO settings (setting_key, setting_value)
-VALUES ('admin_edit_passcode', crypt('5121', gen_salt('bf')))
+VALUES ('admin_edit_passcode', crypt('9789', gen_salt('bf')))
 ON CONFLICT (setting_key)
-DO UPDATE SET setting_value = crypt('5121', gen_salt('bf')), updated_at = NOW();
+DO UPDATE SET setting_value = crypt('9789', gen_salt('bf')), updated_at = NOW();
 
 -- ─── STEP 4: ROW LEVEL SECURITY (RLS) ────────────────────────────────────────
 
