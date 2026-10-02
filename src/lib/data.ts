@@ -398,8 +398,14 @@ export async function fetchQuickBills(opts?: {
 }
 
 export async function deletePurchase(id: string) {
-  await supabase.from("purchase_payments").delete().eq("purchase_id", id);
-  await supabase.from("purchase_items").delete().eq("purchase_id", id);
+  try {
+    await supabase.from("purchase_payments").delete().eq("purchase_id", id);
+    await supabase.from("purchase_items").delete().eq("purchase_id", id);
+    await supabase.from("purchase_edit_logs").delete().eq("purchase_id", id);
+    await supabase.from("receipt_logs").delete().eq("purchase_id", id);
+  } catch (e) {
+    console.warn("Non-fatal error cleaning related purchase logs:", e);
+  }
   const { error } = await supabase.from("purchases").delete().eq("id", id);
   if (error) throw error;
 }

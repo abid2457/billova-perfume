@@ -1,12 +1,13 @@
 import { useState, useEffect, useCallback } from "react";
-import { Search, Loader2, Hash, Printer, FileText, MessageCircle, Pencil, Zap, Package } from "lucide-react";
+import { Search, Loader2, Hash, Printer, FileText, MessageCircle, Pencil, Trash2, Zap, Package } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { EmptyState } from "@/components/empty-state";
 import { AdminPasscodeModal } from "@/components/admin-passcode-modal";
 import { EditPurchaseModal } from "@/components/edit-purchase-modal";
 import { formatDate, formatINR } from "@/lib/types";
-import { fetchQuickBills, fetchReceiptStats } from "@/lib/data";
+import { fetchQuickBills, fetchReceiptStats, deletePurchase } from "@/lib/data";
 import { printThermalReceipt, sendWhatsAppBill, downloadInvoicePDF } from "@/lib/receipt";
 import type { Purchase } from "@/lib/types";
 
@@ -15,9 +16,11 @@ export function QuickBillsTab() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [receiptStats, setReceiptStats] = useState<Map<string, { printCount: number; whatsappCount: number; lastPrinted: string | null; lastWhatsapp: string | null }>>(new Map());
-  // Edit flow
-  const [passkodeTarget, setPasskodeTarget] = useState<Purchase | null>(null);
+  // Edit & Delete flow
+  const [passcodeTarget, setPasscodeTarget] = useState<Purchase | null>(null);
+  const [passcodeMode, setPasscodeMode] = useState<"edit" | "delete" | null>(null);
   const [editPurchase, setEditPurchase] = useState<Purchase | null>(null);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   const loadBills = useCallback(async (searchTerm?: string) => {
     setLoading(true);
@@ -39,11 +42,38 @@ export function QuickBillsTab() {
     loadBills(search);
   };
 
-  const handleEditClick = (p: Purchase) => setPasskodeTarget(p);
-  const handlePasscodeVerified = () => {
-    setEditPurchase(passkodeTarget);
-    setPasskodeTarget(null);
+  const handleEditClick = (p: Purchase) => {
+    setPasscodeMode("edit");
+    setPasscodeTarget(p);
   };
+
+  const handleDeleteClick = (p: Purchase) => {
+    setPasscodeMode("delete");
+    setPasscodeTarget(p);
+  };
+
+  const handlePasscodeVerified = async () => {
+    if (passcodeMode === "edit") {
+      setEditPurchase(passcodeTarget);
+      setPasscodeTarget(null);
+      setPasscodeMode(null);
+    } else if (passcodeMode === "delete" && passcodeTarget) {
+      const target = passcodeTarget;
+      setPasscodeTarget(null);
+      setPasscodeMode(null);
+      try {
+        setDeletingId(target.id);
+        await deletePurchase(target.id);
+        toast.success(`Bill #${target.invoice_number} deleted successfully.`);
+        await loadBills(search);
+      } catch (err: any) {
+        toast.error(err?.message || "Failed to delete bill.");
+      } finally {
+        setDeletingId(null);
+      }
+    }
+  };
+
   const handleEditSaved = useCallback(async () => {
     await loadBills(search);
   }, [loadBills, search]);
@@ -171,6 +201,9 @@ export function QuickBillsTab() {
                           <Button variant="outline" size="sm" className="h-7 rounded-lg text-[11px] px-2 text-violet-700 hover:bg-violet-50" onClick={() => handleEditClick(p)}>
                             <Pencil className="mr-1 h-3 w-3" /> Edit
                           </Button>
+                          <Button variant="outline" size="sm" className="h-7 rounded-lg text-[11px] px-2 text-red-600 hover:bg-red-50 border-red-200" disabled={deletingId === p.id} onClick={() => handleDeleteClick(p)}>
+                            {deletingId === p.id ? <Loader2 className="mr-1 h-3 w-3 animate-spin" /> : <Trash2 className="mr-1 h-3 w-3" />} Delete
+                          </Button>
                         </div>
                       </td>
                     </tr>
@@ -184,8 +217,14 @@ export function QuickBillsTab() {
 
       {/* Admin passcode gate */}
       <AdminPasscodeModal
-        open={!!passkodeTarget}
-        onCancel={() => setPasskodeTarget(null)}
+        open={!!passcodeTarget}
+        title={passcodeMode === "delete" ? "Delete Verification" : "Admin Verification"}
+        description={
+          passcodeMode === "delete"
+            ? `Enter the admin passcode to permanently delete bill #${passcodeTarget?.invoice_number ?? ""}.`
+            : "Enter the admin passcode to edit this purchase."
+        }
+        onCancel={() => { setPasscodeTarget(null); setPasscodeMode(null); }}
         onVerified={handlePasscodeVerified}
       />
 

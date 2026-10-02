@@ -10,9 +10,11 @@ interface Props {
   onCancel: () => void;
   /** Called only after the DB confirms the correct passcode */
   onVerified: () => void;
+  title?: string;
+  description?: string;
 }
 
-export function AdminPasscodeModal({ open, onCancel, onVerified }: Props) {
+export function AdminPasscodeModal({ open, onCancel, onVerified, title = "Admin Verification", description = "Enter the admin passcode to proceed." }: Props) {
   const [code, setCode]       = useState("");
   const [error, setError]     = useState("");
   const [loading, setLoading] = useState(false);
@@ -82,9 +84,9 @@ export function AdminPasscodeModal({ open, onCancel, onVerified }: Props) {
           >
             <KeyRound className="h-7 w-7 text-white" />
           </div>
-          <DialogTitle className="text-center text-lg">Admin Verification</DialogTitle>
+          <DialogTitle className="text-center text-lg">{title}</DialogTitle>
           <p className="text-center text-sm text-muted-foreground">
-            Enter the admin passcode to edit this purchase.
+            {description}
           </p>
         </DialogHeader>
 
